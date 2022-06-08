@@ -23,7 +23,7 @@ public class BurgerpalaceBackendApplication {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
+/*
     @Bean
     CommandLineRunner run(UserService userService){
         return args -> {
@@ -37,4 +37,6 @@ public class BurgerpalaceBackendApplication {
             userService.addRoleToUser("admin@mail.com", "ROLE_ADMIN");
         };
     }
+
+ */
 }
