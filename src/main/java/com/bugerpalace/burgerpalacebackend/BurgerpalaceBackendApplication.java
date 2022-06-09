@@ -32,7 +32,7 @@ public class BurgerpalaceBackendApplication {
             //userService.saveRole(new Role(null, "ROLE_MANAGER"));
             //userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
 
-            userService.saveUser(new User(null, "admin", "Calle de la pirutleta", "admin@mail.com", "123321123", "admin", new ArrayList<>(), null));
+            userService.saveUser(new User(null, "admin", "Calle de la piruleta", "admin@mail.com", "123321123", "admin", new ArrayList<>(), null));
 
             userService.addRoleToUser("admin@mail.com", "ROLE_ADMIN");
         };

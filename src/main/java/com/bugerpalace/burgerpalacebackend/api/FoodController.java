@@ -29,4 +29,27 @@ public class FoodController {
         return ResponseEntity.created(uri).body(foodService.addFood(food));
     }
 
+    @GetMapping("/food/{id}")
+    public ResponseEntity<Food> findFoodById(@PathVariable Long id){
+        return ResponseEntity.ok().body(foodService.findFoodById(id));
+    }
+
+    @DeleteMapping("/food/delete/{id}")
+    public ResponseEntity<Void> deleteFoodById(@PathVariable Long id){
+        foodService.deleteFood(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/food/edit")
+    public ResponseEntity<Food> editFood(@RequestBody Food food){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/food/save").toUriString());
+        return ResponseEntity.created(uri).body(foodService.updateFood(food));
+    }
+    /*@PostMapping("/edit/add")
+    public Food addFood(@RequestBody Food food){
+        return foodService.addFood(food);
+    }
+
+     */
+
 }
