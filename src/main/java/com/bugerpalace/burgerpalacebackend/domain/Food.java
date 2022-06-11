@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name="food")
 public class Food {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String type;
@@ -22,8 +22,11 @@ public class Food {
     private double price;
     private String img;
 
+    /*
     @ManyToMany (mappedBy = "food")
     @JsonIgnore
     private Set<Orders> order;
+
+     */
 
 }

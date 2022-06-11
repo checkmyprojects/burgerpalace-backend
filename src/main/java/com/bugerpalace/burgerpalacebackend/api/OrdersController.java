@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,7 @@ public class OrdersController {
 
     @GetMapping("/orders/save")
     public ResponseEntity<Orders> saveOrder(@RequestBody Orders order){
+        order.setDateCreated(LocalDate.now());
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/food/save").toUriString());
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
     }

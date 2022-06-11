@@ -1,11 +1,13 @@
 package com.bugerpalace.burgerpalacebackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 //@Entity @Data @NoArgsConstructor @AllArgsConstructor
@@ -14,8 +16,11 @@ import java.util.Set;
 public class Orders {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dateCreated;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -32,15 +37,25 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(User user, Set<Food> food) {
+    public Orders(LocalDate dateCreated, User user, Set<Food> food) {
+        this.dateCreated = dateCreated;
         this.user = user;
         this.food = food;
     }
 
-    public Orders(Long id, User user, Set<Food> food) {
+    public Orders(Long id, LocalDate dateCreated, User user, Set<Food> food) {
         this.id = id;
+        this.dateCreated = dateCreated;
         this.user = user;
         this.food = food;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Long getId() {
