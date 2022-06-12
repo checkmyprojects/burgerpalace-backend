@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +46,18 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         return ResponseEntity.ok().body(userService.findUserById(id));
+    }
+
+    // Return username by Authentication Token
+    @GetMapping("/users/whoami")
+    public String whoami(Authentication authentication){
+
+        if (authentication == null){
+            return "user not found or invalid token";
+        }else{
+            String username = authentication.getPrincipal().toString();
+            return username;
+        }
     }
 
     @PostMapping("/users/save")
