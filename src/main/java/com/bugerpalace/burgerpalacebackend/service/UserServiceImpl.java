@@ -77,5 +77,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepo.findAll();
     }
 
+    @Override
+    public User findUserById(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+    }
+
 
 }

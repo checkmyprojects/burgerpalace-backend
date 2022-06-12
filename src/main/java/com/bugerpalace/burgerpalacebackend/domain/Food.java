@@ -1,11 +1,14 @@
 package com.bugerpalace.burgerpalacebackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
@@ -22,8 +25,9 @@ public class Food {
     private double price;
     private String img;
 
-    @ManyToMany (mappedBy = "food")
-    @JsonIgnore
-    private Set<Orders> order;
+    @JsonBackReference
+    @OneToMany (mappedBy = "food")
+//    @JsonIgnore
+    private List<FoodCart> cart;
 
 }

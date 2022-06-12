@@ -27,6 +27,7 @@ public class User {
     private Collection<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy="user")
+    @JsonManagedReference
     private Set<Orders> order;
 
     public User() {

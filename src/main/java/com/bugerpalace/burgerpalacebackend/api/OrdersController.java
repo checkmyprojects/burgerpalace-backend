@@ -1,5 +1,6 @@
 package com.bugerpalace.burgerpalacebackend.api;
 
+import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
 import com.bugerpalace.burgerpalacebackend.domain.Orders;
 import com.bugerpalace.burgerpalacebackend.service.OrdersService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,34 @@ public class OrdersController {
         return ResponseEntity.ok().body(ordersService.findAllOrders());
     }
 
-    @GetMapping("/orders/save")
+    @GetMapping("/orders/{id}")
+    public ResponseEntity <Orders> getOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(ordersService.findOrderById(id));
+    }
+
+    @PostMapping("/orders/save")
     public ResponseEntity<Orders> saveOrder(@RequestBody Orders order){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/food/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
+    }
+
+    @GetMapping("/orders/listFoods")
+    public  ResponseEntity<List<FoodCart>> listAllItemsInCart(@RequestBody Long id){
+        return ResponseEntity.ok().body(ordersService.findOrderById(id).getFoods());
+    }
+
+    // shows all order(id) foods
+    @GetMapping("/orders/{id}/listFoods")
+    public  ResponseEntity<List<FoodCart>> listAllItemsInCartByPath(@PathVariable Long id){
+        return ResponseEntity.ok().body(ordersService.findOrderById(id).getFoods());
+    }
+
+    // add foodCart (food + quantity) to order(id)
+    @PostMapping("/orders/{id}/addFoodToOrder")
+    public ResponseEntity<Orders> saveOrder(@PathVariable Long id, @RequestBody FoodCart foodCart){
+        Orders editOrder =  ordersService.findOrderById(id);
+        editOrder.getFoods().add(foodCart);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
+        return ResponseEntity.created(uri).body(ordersService.addOrder(editOrder));
     }
 }

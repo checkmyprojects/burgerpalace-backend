@@ -42,8 +42,15 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        return ResponseEntity.ok().body(userService.findUserById(id));
+    }
+
     @PostMapping("/users/save")
     public ResponseEntity<User> saveUser(@RequestBody User user){
+        // default role should be ROLE_USER
+        userService.addRoleToUser(user.getUsername(), "ROLE_USER");
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
