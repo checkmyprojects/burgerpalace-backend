@@ -41,7 +41,7 @@ public class FoodServiceImpl implements FoodService{
 
     @Override
     public Food findFoodById(Long id){
-        return foodRepo.findFoodById(id).orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        return foodRepo.findFoodById(id).orElseThrow(() -> new UsernameNotFoundException("Food not found in the database"));
     }
 
     @Override

@@ -30,4 +30,13 @@ public class Food {
 //    @JsonIgnore
     private List<Orders> orders;
 
+    public Food(String name, String type, String ingredients, boolean vegan, String alergies, double price, String img) {
+        this.name = name;
+        this.type = type;
+        this.ingredients = ingredients;
+        this.vegan = vegan;
+        this.alergies = alergies;
+        this.price = price;
+        this.img = img;
+    }
 }
