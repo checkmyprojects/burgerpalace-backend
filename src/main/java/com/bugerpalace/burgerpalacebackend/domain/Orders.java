@@ -19,34 +19,47 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "food_id", nullable = false)
+    //@JsonManagedReference
+    private Food food;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonManagedReference
-    @OneToMany (mappedBy = "order")
-    private List<FoodCart> foods;
-
     public Orders() {
     }
 
-    public Orders(User user, List<FoodCart> foods) {
-        this.user = user;
-        this.foods = foods;
-    }
-
-    public Orders(Long id, User user, List<FoodCart> foods) {
+    public Orders(Long id, int quantity, Food food, User user) {
         this.id = id;
+        this.quantity = quantity;
+        this.food = food;
         this.user = user;
-        this.foods = foods;
     }
 
-    public List<FoodCart> getFoods() {
-        return foods;
+    public Orders(int quantity, Food food, User user) {
+        this.quantity = quantity;
+        this.food = food;
+        this.user = user;
     }
 
-    public void setFoods(List<FoodCart> foods) {
-        this.foods = foods;
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     public Long getId() {
@@ -70,8 +83,9 @@ public class Orders {
     public String toString() {
         return "Orders{" +
                 "id=" + id +
+                ", quantity=" + quantity +
+                ", food=" + food +
                 ", user=" + user +
-                ", foods=" + foods +
                 '}';
     }
 }

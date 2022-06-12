@@ -1,4 +1,4 @@
-package com.bugerpalace.burgerpalacebackend.service;
+/*package com.bugerpalace.burgerpalacebackend.service;
 
 import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
 
@@ -11,4 +11,4 @@ public interface FoodCartService {
     FoodCart updateFoodCart(FoodCart foodCart);
     FoodCart findFoodCartById(Long id);
     void deleteFoodCart(Long id);
-}
+}*/

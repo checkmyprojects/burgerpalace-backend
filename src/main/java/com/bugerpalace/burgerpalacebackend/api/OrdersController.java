@@ -1,14 +1,19 @@
 package com.bugerpalace.burgerpalacebackend.api;
 
-import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
+//import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
+import com.bugerpalace.burgerpalacebackend.domain.Food;
 import com.bugerpalace.burgerpalacebackend.domain.Orders;
+import com.bugerpalace.burgerpalacebackend.domain.User;
+import com.bugerpalace.burgerpalacebackend.service.FoodService;
 import com.bugerpalace.burgerpalacebackend.service.OrdersService;
+import com.bugerpalace.burgerpalacebackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,22 +24,72 @@ public class OrdersController {
 
     private final OrdersService ordersService;
 
+    private final UserService userService;
+
+    private final FoodService foodService;
+
     @GetMapping("/orders")
     public ResponseEntity<List<Orders>> getOrders() {
         return ResponseEntity.ok().body(ordersService.findAllOrders());
     }
-
+/*
     @GetMapping("/orders/{id}")
     public ResponseEntity <Orders> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok().body(ordersService.findOrderById(id));
     }
-
+*/
+    // Get all items in user(id) cart
+    @GetMapping("/orders/{id}")
+    public ResponseEntity <List<Orders>> getOrderByUserId(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        return ResponseEntity.ok().body(user.getOrder());
+    }
+    /*
     @PostMapping("/orders/save")
     public ResponseEntity<Orders> saveOrder(@RequestBody Orders order){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
     }
+     */
 
+    /*@PostMapping("/orders/{id}/save")
+    public ResponseEntity<Orders> saveOrder(@PathVariable Long id,@RequestParam (value = "quantity")int quantity, @RequestBody Food food){
+        Orders order = new Orders();
+        order.setQuantity(quantity);
+        order.setFood(food);
+        order.setUser(userService.findUserById(id));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
+        return ResponseEntity.created(uri).body(ordersService.addOrder(order));
+    }*/
+
+    // Add item to user(id) cart. Need to sent quantity and foodid as parameter
+    // example localhost:8080/api/orders/3/save?quantity=2&foodid=10
+    @PostMapping("/orders/{id}/save")
+    public ResponseEntity<Orders> saveOrder(@PathVariable Long id,@RequestParam (value = "quantity")int quantity, @RequestParam (value = "foodid")Long foodId){
+        Orders order = new Orders();
+        order.setQuantity(quantity);
+        order.setFood(foodService.findFoodById(foodId));
+        order.setUser(userService.findUserById(id));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/save").toUriString());
+        return ResponseEntity.created(uri).body(ordersService.addOrder(order));
+    }
+
+    // Reset all food items in user(id)
+    @GetMapping("/orders/{id}/purchase")
+    public ResponseEntity <Void> resetItemsFromUser(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        user.setOrder(new ArrayList<>());
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/orders/{id}/deleteall")
+    public ResponseEntity <Void> deleteAllItemsFromUser(@PathVariable Long id){
+        User user = userService.findUserById(id);
+        List<Orders> orders = user.getOrder();
+        orders.forEach((singleOrder) -> ordersService.deleteOrderById(singleOrder.getId()));
+        return ResponseEntity.noContent().build();
+    }
+/*
     @GetMapping("/orders/listFoods")
     public  ResponseEntity<List<FoodCart>> listAllItemsInCart(@RequestBody Long id){
         return ResponseEntity.ok().body(ordersService.findOrderById(id).getFoods());
@@ -54,4 +109,6 @@ public class OrdersController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
         return ResponseEntity.created(uri).body(ordersService.addOrder(editOrder));
     }
+
+ */
 }

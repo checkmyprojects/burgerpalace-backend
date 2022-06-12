@@ -1,4 +1,4 @@
-package com.bugerpalace.burgerpalacebackend.domain;
+/*package com.bugerpalace.burgerpalacebackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -83,4 +83,4 @@ public class FoodCart {
                 ", order=" + order +
                 '}';
     }
-}
+}*/

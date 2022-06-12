@@ -28,6 +28,6 @@ public class Food {
     @JsonBackReference
     @OneToMany (mappedBy = "food")
 //    @JsonIgnore
-    private List<FoodCart> cart;
+    private List<Orders> orders;
 
 }

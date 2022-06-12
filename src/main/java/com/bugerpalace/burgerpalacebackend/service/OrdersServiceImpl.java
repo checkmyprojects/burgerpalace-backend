@@ -32,4 +32,9 @@ public class OrdersServiceImpl implements OrdersService{
     public Orders findOrderById(Long id) {
         return ordersRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Food not found in the database"));
     }
+
+    @Override
+    public void deleteOrderById(Long id) {
+        ordersRepo.deleteById(id);
+    }
 }

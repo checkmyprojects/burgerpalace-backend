@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 //@Entity @Data @NoArgsConstructor @AllArgsConstructor
@@ -28,12 +29,12 @@ public class User {
 
     @OneToMany(mappedBy="user")
     @JsonManagedReference
-    private Set<Orders> order;
+    private List<Orders> order;
 
     public User() {
     }
 
-    public User(String name, String address, String username, String phone, String password, Collection<Role> roles, Set<Orders> order) {
+    public User(String name, String address, String username, String phone, String password, Collection<Role> roles, List<Orders> order) {
         this.name = name;
         this.address = address;
         this.username = username;
@@ -43,7 +44,7 @@ public class User {
         this.order = order;
     }
 
-    public User(Long id, String name, String address, String username, String phone, String password, Collection<Role> roles, Set<Orders> order) {
+    public User(Long id, String name, String address, String username, String phone, String password, Collection<Role> roles, List<Orders> order) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -111,11 +112,11 @@ public class User {
     }
 
     @JsonManagedReference
-    public Set<Orders> getOrder() {
+    public List<Orders> getOrder() {
         return order;
     }
 
-    public void setOrder(Set<Orders> order) {
+    public void setOrder(List<Orders> order) {
         this.order = order;
     }
 

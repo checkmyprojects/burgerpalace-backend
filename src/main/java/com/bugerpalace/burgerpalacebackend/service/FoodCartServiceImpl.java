@@ -1,4 +1,4 @@
-package com.bugerpalace.burgerpalacebackend.service;
+/*package com.bugerpalace.burgerpalacebackend.service;
 
 import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
 import com.bugerpalace.burgerpalacebackend.repo.FoodCartRepo;
@@ -41,4 +41,4 @@ public class FoodCartServiceImpl implements FoodCartService{
     public void deleteFoodCart(Long id) {
         foodCartRepo.deleteById(id);
     }
-}
+}*/

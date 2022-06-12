@@ -1,4 +1,4 @@
-package com.bugerpalace.burgerpalacebackend.api;
+/*package com.bugerpalace.burgerpalacebackend.api;
 
 import com.bugerpalace.burgerpalacebackend.domain.Food;
 import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
@@ -51,8 +51,9 @@ public class FoodCartController {
         return ResponseEntity.created(uri).body(foodCart);
     }
 */
+//////////////////////////////////////////
 
-    @PostMapping("/cart/save")
+    /*@PostMapping("/cart/save")
     public ResponseEntity<FoodCart> createFoodCart(@RequestParam (value = "quantity")int quantity, @RequestParam (value = "orderid")Long orderId, @RequestBody Food food){
         FoodCart foodCart = new FoodCart();
         foodCart.setQuantity(quantity);
@@ -63,3 +64,4 @@ public class FoodCartController {
     }
 
 }
+*/
