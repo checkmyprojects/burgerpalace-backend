@@ -50,9 +50,12 @@ public class UserController {
     @PostMapping("/users/save")
     public ResponseEntity<User> saveUser(@RequestBody User user){
         // default role should be ROLE_USER
-        userService.addRoleToUser(user.getUsername(), "ROLE_USER");
+
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+        //return ResponseEntity.created(uri).body(userService.saveUser(user));
+        userService.saveUser(user);
+        userService.addRoleToUser(user.getUsername(), "ROLE_USER");
+        return ResponseEntity.created(uri).body(user);
     }
 
     @PostMapping("/role/save")
