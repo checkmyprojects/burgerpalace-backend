@@ -74,6 +74,32 @@ public class OrdersController {
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
     }
 
+    /*
+    userId: 1,
+    [
+        {
+            foodId: 1,
+            quantity: 2
+        },
+        {
+            foodId: 2,
+            quantity: 1
+        },
+    ]
+    UUID = generar el UUID
+    foreach {
+        Orders order = new Orders();
+        order.setUUID = UUID
+        order.setQuantity(quantity);
+        order.setFood(foodService.findFoodById(foodId));
+        order.setUser(userService.findUserById(id));
+        order.setStatus("PAGADO")
+    }
+
+
+
+     */
+
     // Reset all food items in user(id)
     @GetMapping("/orders/{id}/purchase")
     public ResponseEntity <Void> resetItemsFromUser(@PathVariable Long id) {
@@ -89,26 +115,4 @@ public class OrdersController {
         orders.forEach((singleOrder) -> ordersService.deleteOrderById(singleOrder.getId()));
         return ResponseEntity.noContent().build();
     }
-/*
-    @GetMapping("/orders/listFoods")
-    public  ResponseEntity<List<FoodCart>> listAllItemsInCart(@RequestBody Long id){
-        return ResponseEntity.ok().body(ordersService.findOrderById(id).getFoods());
-    }
-
-    // shows all order(id) foods
-    @GetMapping("/orders/{id}/listFoods")
-    public  ResponseEntity<List<FoodCart>> listAllItemsInCartByPath(@PathVariable Long id){
-        return ResponseEntity.ok().body(ordersService.findOrderById(id).getFoods());
-    }
-
-    // add foodCart (food + quantity) to order(id)
-    @PostMapping("/orders/{id}/addFoodToOrder")
-    public ResponseEntity<Orders> saveOrder(@PathVariable Long id, @RequestBody FoodCart foodCart){
-        Orders editOrder =  ordersService.findOrderById(id);
-        editOrder.getFoods().add(foodCart);
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/save").toUriString());
-        return ResponseEntity.created(uri).body(ordersService.addOrder(editOrder));
-    }
-
- */
 }
