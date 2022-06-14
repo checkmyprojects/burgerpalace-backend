@@ -88,11 +88,9 @@ public class OrdersController {
             order.setFood(foodService.findFoodById(product.getFood_id()));
             order.setQuantity(product.getQuantity());
             order.setUser(userService.findUserById(user_id));
-
-
-            // To be done
-            //order.setUuid(uuid);
+            order.setUuid(uuid);
             ordersService.addOrder(order);
+            // saveall en el repo para guardar todo
         });
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/checkout").toUriString());
         return ResponseEntity.created(uri).build();

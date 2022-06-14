@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 //@Entity @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
@@ -20,6 +21,8 @@ public class Orders {
     private Long id;
 
     private int quantity;
+
+    private UUID uuid;
 
     @ManyToOne
     @JoinColumn(name = "food_id", nullable = false)
@@ -33,9 +36,17 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Long id, int quantity, Food food, User user) {
+    public Orders(int quantity, UUID uuid, Food food, User user) {
+        this.quantity = quantity;
+        this.uuid = uuid;
+        this.food = food;
+        this.user = user;
+    }
+
+    public Orders(Long id, int quantity, UUID uuid, Food food, User user) {
         this.id = id;
         this.quantity = quantity;
+        this.uuid = uuid;
         this.food = food;
         this.user = user;
     }
@@ -62,6 +73,14 @@ public class Orders {
         this.food = food;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public Long getId() {
         return id;
     }
@@ -84,6 +103,7 @@ public class Orders {
         return "Orders{" +
                 "id=" + id +
                 ", quantity=" + quantity +
+                ", uuid=" + uuid +
                 ", food=" + food +
                 ", user=" + user +
                 '}';
