@@ -2,6 +2,7 @@ package com.bugerpalace.burgerpalacebackend.api;
 
 //import com.bugerpalace.burgerpalacebackend.domain.FoodCart;
 import com.bugerpalace.burgerpalacebackend.domain.Food;
+import com.bugerpalace.burgerpalacebackend.domain.ItemToPurchase;
 import com.bugerpalace.burgerpalacebackend.domain.Orders;
 import com.bugerpalace.burgerpalacebackend.domain.User;
 import com.bugerpalace.burgerpalacebackend.service.FoodService;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,6 +66,7 @@ public class OrdersController {
 
     // Add item to user(id) cart. Need to sent quantity and foodid as parameter
     // example localhost:8080/api/orders/3/save?quantity=2&foodid=10
+
     @PostMapping("/orders/{id}/save")
     public ResponseEntity<Orders> saveOrder(@PathVariable Long id,@RequestParam (value = "quantity")int quantity, @RequestParam (value = "foodid")Long foodId){
         Orders order = new Orders();
@@ -74,6 +77,29 @@ public class OrdersController {
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
     }
 
+
+    @PostMapping("/orders/{user_id}/checkout")
+    public ResponseEntity<List<Orders>> checkout(@PathVariable Long user_id, @RequestBody List<ItemToPurchase> items){
+
+        //Generate uuid for all item in this order
+        UUID uuid = UUID.randomUUID();
+        items.forEach((product) -> {
+            Orders order = new Orders();
+            order.setFood(foodService.findFoodById(product.getFood_id()));
+            order.setQuantity(product.getQuantity());
+            order.setUser(userService.findUserById(user_id));
+
+
+            // To be done
+            //order.setUuid(uuid);
+            ordersService.addOrder(order);
+        });
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/checkout").toUriString());
+        return ResponseEntity.created(uri).build();
+    }
+
+
+    //UUID uuid = UUID.randomUUID();
     /*
     userId: 1,
     [
