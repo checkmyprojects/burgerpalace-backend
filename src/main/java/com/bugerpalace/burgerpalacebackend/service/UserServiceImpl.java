@@ -82,5 +82,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepo.deleteById(id);
+    }
+
 
 }

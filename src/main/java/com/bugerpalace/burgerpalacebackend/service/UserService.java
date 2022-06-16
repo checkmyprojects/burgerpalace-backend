@@ -13,4 +13,6 @@ public interface UserService {
     User getUser(String username);
     List<User>getUsers();
     User findUserById(Long id);
+    User findByUsername(String username);
+    void deleteUserById(Long id);
 }

@@ -4,6 +4,7 @@ import com.bugerpalace.burgerpalacebackend.domain.Food;
 import com.bugerpalace.burgerpalacebackend.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -18,8 +19,20 @@ public class FoodController {
 
     private final FoodService foodService;
 
-    @GetMapping("/food")
+    /*@GetMapping("/food")
     public ResponseEntity<List<Food>> getFoods() {
+        return ResponseEntity.ok().body(foodService.findAllFoods());
+    }*/
+
+    @GetMapping("/food")
+    public ResponseEntity<List<Food>> getFoods(Authentication authentication) {
+        if (authentication == null){
+            System.out.println("user not found or invalid token");
+        }else{
+            String username = authentication.getPrincipal().toString();
+            System.out.println(username);
+        }
+        System.out.println("test");
         return ResponseEntity.ok().body(foodService.findAllFoods());
     }
 
