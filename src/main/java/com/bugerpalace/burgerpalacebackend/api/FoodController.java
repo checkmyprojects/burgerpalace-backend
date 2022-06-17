@@ -36,6 +36,12 @@ public class FoodController {
         return ResponseEntity.ok().body(foodService.findAllFoods());
     }
 
+    @GetMapping("/food/filter/{categoryName}")
+    public ResponseEntity<List<Food>> getFoodsbyCategory(@PathVariable String categoryName) {
+        System.out.println(categoryName);
+        return ResponseEntity.ok().body(foodService.findFoodByCategory(categoryName));
+    }
+
     @PostMapping("/food/save")
     public ResponseEntity<Food> saveFood(@RequestBody Food food){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/food/save").toUriString());

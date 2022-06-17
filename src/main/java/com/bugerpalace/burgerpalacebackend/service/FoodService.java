@@ -11,4 +11,5 @@ public interface FoodService {
     Food updateFood(Food food);
     Food findFoodById(Long id);
     void deleteFood(Long id);
+    List<Food> findFoodByCategory(String categoryName);
 }

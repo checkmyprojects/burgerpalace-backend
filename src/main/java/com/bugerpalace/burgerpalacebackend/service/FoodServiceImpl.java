@@ -48,4 +48,10 @@ public class FoodServiceImpl implements FoodService{
     public void deleteFood(Long id){
         foodRepo.deleteFoodById(id);
     }
+
+    @Override
+    public List<Food> findFoodByCategory(String categoryName) {
+        System.out.println(categoryName);
+        return foodRepo.findAllByType(categoryName);
+    }
 }
