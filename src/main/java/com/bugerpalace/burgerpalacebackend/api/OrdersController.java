@@ -81,11 +81,13 @@ public class OrdersController {
     @PostMapping("/orders/{user_id}/checkout")
     public ResponseEntity<List<Orders>> checkout(@PathVariable Long user_id, @RequestBody List<ItemToPurchase> items){
 
+        System.out.println(items);
+        System.out.println("Starting to build Items");
         //Generate uuid for all item in this order
         UUID uuid = UUID.randomUUID();
         items.forEach((product) -> {
             Orders order = new Orders();
-            order.setFood(foodService.findFoodById(product.getFood_id()));
+            order.setFood(foodService.findFoodById(product.getFood().getId()));
             order.setQuantity(product.getQuantity());
             order.setUser(userService.findUserById(user_id));
             order.setUuid(uuid);

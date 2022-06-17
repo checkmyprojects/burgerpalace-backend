@@ -2,23 +2,23 @@ package com.bugerpalace.burgerpalacebackend.domain;
 
 public class ItemToPurchase {
 
-    private Long food_id;
+    private Food food;
     private int quantity;
 
     public ItemToPurchase() {
     }
 
-    public ItemToPurchase(Long food_id, int quantity) {
-        this.food_id = food_id;
+    public ItemToPurchase(Food food, int quantity) {
+        this.food = food;
         this.quantity = quantity;
     }
 
-    public Long getFood_id() {
-        return food_id;
+    public Food getFood() {
+        return food;
     }
 
-    public void setFood_id(Long food_id) {
-        this.food_id = food_id;
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     public int getQuantity() {
