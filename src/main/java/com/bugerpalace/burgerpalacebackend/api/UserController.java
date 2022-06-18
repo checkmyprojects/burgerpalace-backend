@@ -67,7 +67,8 @@ public class UserController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         //return ResponseEntity.created(uri).body(userService.saveUser(user));
         userService.saveUser(user);
-        userService.addRoleToUser(user.getUsername(), "ROLE_USER");
+        // TEMP DISABLE AUTO ADD ROLE TO USER
+        //userService.addRoleToUser(user.getUsername(), "ROLE_USER");
         return ResponseEntity.created(uri).body(user);
     }
 

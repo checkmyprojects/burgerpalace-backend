@@ -10,6 +10,7 @@ import com.bugerpalace.burgerpalacebackend.service.OrdersService;
 import com.bugerpalace.burgerpalacebackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -67,7 +68,7 @@ public class OrdersController {
     // Add item to user(id) cart. Need to sent quantity and foodid as parameter
     // example localhost:8080/api/orders/3/save?quantity=2&foodid=10
 
-    @PostMapping("/orders/{id}/save")
+    /*@PostMapping("/orders/{id}/save")
     public ResponseEntity<Orders> saveOrder(@PathVariable Long id,@RequestParam (value = "quantity")int quantity, @RequestParam (value = "foodid")Long foodId){
         Orders order = new Orders();
         order.setQuantity(quantity);
@@ -75,10 +76,9 @@ public class OrdersController {
         order.setUser(userService.findUserById(id));
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/save").toUriString());
         return ResponseEntity.created(uri).body(ordersService.addOrder(order));
-    }
-
-
-    @PostMapping("/orders/{user_id}/checkout")
+    }*/
+/*
+@PostMapping("/orders/{user_id}/checkout")
     public ResponseEntity<List<Orders>> checkout(@PathVariable Long user_id, @RequestBody List<ItemToPurchase> items){
 
         System.out.println(items);
@@ -93,6 +93,28 @@ public class OrdersController {
             order.setUuid(uuid);
             ordersService.addOrder(order);
             // saveall en el repo para guardar todo
+        });
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/checkout").toUriString());
+        return ResponseEntity.created(uri).build();
+    }
+ */
+
+    @PostMapping("/orders/checkout")
+    public ResponseEntity<List<Orders>> checkout(Authentication authentication, @RequestBody List<ItemToPurchase> items){
+
+        System.out.println("Starting to build Items");
+        //Generate uuid for all item in this order
+        User user = userService.findByUsername(authentication.getPrincipal().toString());
+        System.out.println("Current order for user: " + user.getName());
+        UUID uuid = UUID.randomUUID();
+        items.forEach((product) -> {
+            Orders order = new Orders();
+            order.setFood(foodService.findFoodById(product.getFood().getId()));
+            order.setQuantity(product.getQuantity());
+            order.setUser(user);
+            order.setUuid(uuid);
+            ordersService.addOrder(order);
+            // saveall in the repo is better todo
         });
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/orders/{id}/checkout").toUriString());
         return ResponseEntity.created(uri).build();
@@ -127,6 +149,7 @@ public class OrdersController {
      */
 
     // Reset all food items in user(id)
+    /*
     @GetMapping("/orders/{id}/purchase")
     public ResponseEntity <Void> resetItemsFromUser(@PathVariable Long id) {
         User user = userService.findUserById(id);
@@ -140,5 +163,5 @@ public class OrdersController {
         List<Orders> orders = user.getOrder();
         orders.forEach((singleOrder) -> ordersService.deleteOrderById(singleOrder.getId()));
         return ResponseEntity.noContent().build();
-    }
+    }*/
 }
