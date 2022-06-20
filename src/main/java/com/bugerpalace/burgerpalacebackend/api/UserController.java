@@ -68,7 +68,7 @@ public class UserController {
         //return ResponseEntity.created(uri).body(userService.saveUser(user));
         userService.saveUser(user);
         // TEMP DISABLE AUTO ADD ROLE TO USER
-        //userService.addRoleToUser(user.getUsername(), "ROLE_USER");
+        userService.addRoleToUser(user.getUsername(), "ROLE_USER");
         return ResponseEntity.created(uri).body(user);
     }
 
