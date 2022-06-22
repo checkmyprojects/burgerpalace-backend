@@ -33,7 +33,7 @@ We are a group of enthusiastic coders excited about web-designing. On our latest
 
 When deploying to heroku we had to move from MySQL to Postgres.
 
-When building JWT token, we missed a few fields missing that we needed on our frontend so we had to do that later.
+When building JWT token, we forgot a few fields that we needed on our frontend so we had to do that later.
 
 A good planning helps speed things up.
 
