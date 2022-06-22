@@ -90,6 +90,7 @@ A good planning helps speed things up.
                     "img": "assets/img/product/burger-doubleburger.png"
                 }
             }
+        ]
     }
 ]
 ```
@@ -125,6 +126,7 @@ A good planning helps speed things up.
                 "img": "assets/img/product/drink-cocacola.png"
             }
         }
+    ]
 }
 ```
 ### Return the authed user username
