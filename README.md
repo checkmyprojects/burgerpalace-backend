@@ -17,7 +17,7 @@ Frontend uses angular and with JWT we do the authentication and authorization.
 All services are tested.
 
 ## Team
----
+
 
 Hi there!
 
@@ -27,9 +27,19 @@ We are a group of enthusiastic coders excited about web-designing. On our latest
 - Jesús: https://github.com/checkmyprojects Developer
 - Carlos: https://github.com/CarlitosHunter Product Owner/developer
 
+## Optimizations
+
+- Code needs some refactoring and clean up.
+
+- Use Swagger for API documentation.
+
+- A new entity for orders will make it easier to organize. One of the branches has it halfway done.
+
+- Add a search for food name, it should be easy.
+
 
 ## Lessons Learned:
----
+
 
 When deploying to heroku we had to move from MySQL to Postgres.
 
