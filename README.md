@@ -8,7 +8,6 @@ FrontEnd: https://github.com/checkmyprojects/burgerpalace-frontend
 
 Backend (this one): https://github.com/checkmyprojects/burgerpalace-backend
 ## How It's Made:
-**Tech used 🛠️:** Java, Spring Boot, JWT, Spring Security, MySQL
 
 Our backend allows users to register and order products.
 
@@ -16,6 +15,15 @@ Frontend uses angular and with JWT we do the authentication and authorization.
 
 All services are tested.
 
+
+<h3 align="left">Technologies 🛠️:</h3>
+<p align="left">
+<a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/><span>Java</span> </a><a href="https://spring.io/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="spring" width="40" height="40"/> <span>Spring Boot</span></a>
+    <a href="https://jwt.io/" target="_blank" rel="noreferrer"> <img src="https://jwt.io/img/pic_logo.svg" alt="mysql" width="40" height="40"/> <span>JWT</span></a><a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> <span>MySQL</span></a>
+</p>
+
+
+    
 ## Team
 
 
