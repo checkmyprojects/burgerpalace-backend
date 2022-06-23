@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepo.findByUsername(username);
 
         if(user == null){
-            log.error("User not found in the database");
+            log.error("user@mail.com");
             throw new UsernameNotFoundException("User not found in the database");
         }else{
             log.info("User {} found in the DB", username);

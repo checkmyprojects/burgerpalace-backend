@@ -10,10 +10,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -105,20 +110,34 @@ class OrdersServiceImplTest {
 
         underTest.addOrder(order);
 
-        ArgumentCaptor<Orders> ordersArgumentCaptor = ArgumentCaptor.forClass(Orders.class);
-        verify(ordersRepo).findById(ordersArgumentCaptor.capture().getId());
 
-        Orders capturedOrder = ordersArgumentCaptor.getValue();
+        given(ordersRepo.findById(1L)).willReturn(Optional.of(order));
+        underTest.findOrderById(1L);
+        verify(ordersRepo).findById(1L);
 
-        assertThat(capturedOrder).isEqualTo(order);
+    }
 
-        //underTest.findOrderById(order.getId());
-        //verify(ordersRepo).findById(order.getId());
+    @Test
+    void throwsExceptionWhenOrderNotFound() {
+
+        given(ordersRepo.findById(1L)).willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> underTest.findOrderById(1L)).isInstanceOf(UsernameNotFoundException.class).hasMessageContaining("Food not found in the database");
     }
 
     @Test
     void deleteOrderById() {
-        underTest.deleteOrderById(1L);
-        verify(ordersRepo).deleteById(1L);
+        Food food = new Food(
+                1L,
+                "Veggieburger",
+                "burger",
+                "Veggieburger",
+                true,
+                "none",
+                12.0,
+                "https://www.abomyfriend.com/wp-content/uploads/2021/11/veggie-burger_500x310px.png"
+        );
+        underTest.deleteOrderById(food.getId());
+        verify(ordersRepo).deleteById(food.getId());
     }
 }

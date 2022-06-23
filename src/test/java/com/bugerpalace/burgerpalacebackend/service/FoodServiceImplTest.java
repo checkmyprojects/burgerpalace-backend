@@ -7,8 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
@@ -82,8 +89,17 @@ class FoodServiceImplTest {
                 null
         );
         //underTest.addFood(food);
+        given(foodRepo.findFoodById(food.getId())).willReturn(Optional.of(food));
         underTest.findFoodById(food.getId());
         verify(foodRepo).findFoodById(food.getId());
+    }
+
+    @Test
+    void throwsExceptionWhenFoodNotFound() {
+
+        given(foodRepo.findFoodById(1L)).willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> underTest.findFoodById(1L)).isInstanceOf(UsernameNotFoundException.class).hasMessageContaining("Food not found in the database");
     }
 
     @Test
@@ -102,5 +118,11 @@ class FoodServiceImplTest {
         //underTest.addFood(food);
         underTest.deleteFood(food.getId());
         verify(foodRepo).deleteFoodById(food.getId());
+    }
+
+    @Test
+    void findFoodByCategory() {
+        underTest.findFoodByCategory("burger");
+        verify(foodRepo).findAllByType("burger");
     }
 }
